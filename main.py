@@ -6,7 +6,7 @@ board = [
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' S ', ' S ', ' S ', 'S', 'S', ' S ', ' S ', ' S '],
-    ['E_L', 'H_L', 'M_L', 'Q', 'K', 'M_R', 'H_R', 'E_R']
+    ['E_L', 'H_L', 'M_L', 'Q', 'W_K', 'M_R', 'H_R', 'E_R']
 ]
 
 def print_board():
@@ -31,29 +31,38 @@ def Indicies():
     ]
     return indicies
 
-enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E"]
+enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E", "B_S"]
 
 # pieces = {
     # 'B_L_E': 
 # }
-def check_enemy_pieces():
+def check_enemy_pieces(row, col):
     for i in range(0, len(enemy_pieces)):
-        return enemy_pieces[i]
+        # print(enemy_pieces[i])
+        if enemy_pieces[i] == board[row][col]:
+            print(enemy_pieces[i])
+            return enemy_pieces[i]
 
-def check_adjecent_piece():
-    for adj_piece in board:
-        while("W_K" != adj_piece):
-            if check_enemy_pieces() == adj_piece:
-                return True
+def check_adjecent_piece(row, col):
+    for piece in board:
+        # print("adj", piece[row+1])
+        # while("W_K" != piece[row]):
+        if check_enemy_pieces(row, col) == piece[row+1]:
+            print("true")
+            print("adj", piece[row+1])
+            return piece[row+1]
 
 def CheckMate():
     i=7
     j=4
     for row in range(0,8):
         for col in range(0,8):
-            if check_enemy_pieces() == board[row][col]:
-                # check_adjecent_piece() ==  
-                pass
+            if check_enemy_pieces(row, col) == board[row][col]: 
+                if check_enemy_pieces(row, col) == check_adjecent_piece(row, col):
+                    pass
+                else:
+                    print("check mate")
+                    break
 
 def print_indicies():
     indicies = Indicies()
