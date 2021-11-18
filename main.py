@@ -59,21 +59,43 @@ def check_adjecent_piece(row, col):
         # print("col", col)
         # while("W_K" != piece[row]):
         if check_enemy_pieces(row, col) == piece[row+1]:
-            # print("3 true")
+            print("row ", str(row) + " " + str(col))
             # print("adj", piece[row+1])
             return piece[row+1]
         # elif check_enemy_pieces(row, col) ==  piece[col+1]:
         #     return piece[col+1]
 
 def CheckMate():
-    i=7
-    j=4
+    # i=7
+    # j=4
     for row in range(8):
         # print(row)
         for col in range(8):
             # print("ele",board[row][col])
             if check_enemy_pieces(row, col) == board[row][col]:
-                piece = board[row][col]
+                if "B_L_E" == board[row][col]:
+                    # print("treue")
+                    for i in range(8):
+                        for j in range(8):
+                            if i == j == 1:
+                                break
+                            elif i == 2 and j == 1:
+                                break
+                            elif i == 3 and j == 1:
+                                break
+                            elif i == 4 and j == 1:
+                                break
+                            elif i == 5 and j == 1:
+                                break
+                            elif i == 6 and j == 1:
+                                break
+                            elif i == 7 and j == 1:
+                            # while(i<1 and j<1):
+                                break
+                            # print(i,
+                            if check_adjecent_piece(i,j):
+                                print("true")
+                                # break
                 # print(piece)
                 # print("1 true at row "+ str(row) + " col " + str(col) + " piece " + board[row][col])
                 # print("at col " + str(col) + " piece " + check_enemy_pieces(row, col))
