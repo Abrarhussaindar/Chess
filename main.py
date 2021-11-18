@@ -1,9 +1,9 @@
 board = [
     ['B_L_E', 'B_L_H', 'B_L_C', 'B_Q', 'B_K', 'B_R_C', 'B_R_H', 'B_R_E'],
-    [' S ', ' S ', ' S ', 'S', 'S', ' S ', ' S ', ' S '],
+    ['B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S'],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
-    [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
+    [' - ', ' - ', ' - ', '', '-', ' - ', ' - ', ' - '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' S ', ' S ', ' S ', 'S', 'S', ' S ', ' S ', ' S '],
     ['E_L', 'H_L', 'M_L', 'Q', 'W_K', 'M_R', 'H_R', 'E_R']
@@ -15,7 +15,17 @@ def print_board():
         print(row)
 print_board()
 
+# class Pieces:
+#     def __init__(self):
+#         self.ist_index = 0
+#         self.second_index = 0
+        
+# p = Pieces()
+# print(p.ist_index)
 
+# Pieces = {
+#     "B_E": 
+# }
 
 def Indicies():
     print("\nIndicies for the board:\n")
@@ -40,29 +50,46 @@ def check_enemy_pieces(row, col):
     for i in range(0, len(enemy_pieces)):
         # print(enemy_pieces[i])
         if enemy_pieces[i] == board[row][col]:
-            print(enemy_pieces[i])
+            # print("4 true")
+            # print(enemy_pieces[i])
             return enemy_pieces[i]
 
 def check_adjecent_piece(row, col):
     for piece in board:
-        # print("adj", piece[row+1])
+        # print("col", col)
         # while("W_K" != piece[row]):
         if check_enemy_pieces(row, col) == piece[row+1]:
-            print("true")
-            print("adj", piece[row+1])
+            # print("3 true")
+            # print("adj", piece[row+1])
             return piece[row+1]
+        # elif check_enemy_pieces(row, col) ==  piece[col+1]:
+        #     return piece[col+1]
 
 def CheckMate():
     i=7
     j=4
-    for row in range(0,8):
-        for col in range(0,8):
-            if check_enemy_pieces(row, col) == board[row][col]: 
-                if check_enemy_pieces(row, col) == check_adjecent_piece(row, col):
-                    pass
-                else:
-                    print("check mate")
-                    break
+    for row in range(8):
+        # print(row)
+        for col in range(8):
+            # print("ele",board[row][col])
+            if check_enemy_pieces(row, col) == board[row][col]:
+                piece = board[row][col]
+                # print(piece)
+                # print("1 true at row "+ str(row) + " col " + str(col) + " piece " + board[row][col])
+                # print("at col " + str(col) + " piece " + check_enemy_pieces(row, col))
+                # piece = check_adjecent_piece(row, col)
+                # print(piece)
+                    
+                    # pass
+                    # print("true", check_adjecent_piece(row, col))
+                    # print("2 true")
+                    # pass
+            # break
+
+                    
+            # else:
+            #     print(check_enemy_pieces(row, col))
+            #     print("not enemy piece")
 
 def print_indicies():
     indicies = Indicies()
@@ -100,9 +127,10 @@ def input_indicies():
 
     # return index_1, index_2
 # while(True):
+
+print_indicies()
 CheckMate()
-    # print_indicies()
-    # # input_piece()
+# input_piece()
     # input_indicies()
     # print_board()
 # board[int(input("enter the ist index of that chess piece   "))][int(input("enter the 2nd index of that chess piece "))] = "-"
