@@ -1,12 +1,12 @@
 board = [
     ['B_L_E', 'B_L_H', 'B_L_C', 'B_Q', 'B_K', 'B_R_C', 'B_R_H', 'B_R_E'],
-    ['B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S', 'B_S'],
+    [' B_S ', ' B_S ', ' B_S ', 'B_S', 'B_S', ' B_S ', ' B_S ', ' B_S '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
-    [' - ', ' - ', ' - ', '', '-', ' - ', ' - ', ' - '],
+    [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' - ', ' - ', ' - ', '-', '-', ' - ', ' - ', ' - '],
     [' S ', ' S ', ' S ', 'S', 'S', ' S ', ' S ', ' S '],
-    ['E_L', 'H_L', 'M_L', 'Q', 'W_K', 'M_R', 'H_R', 'E_R']
+    ['E_L', 'H_L', 'M_L', 'Q', 'K', 'M_R', 'H_R', 'E_R']
 ]
 
 def print_board():
@@ -15,17 +15,7 @@ def print_board():
         print(row)
 print_board()
 
-# class Pieces:
-#     def __init__(self):
-#         self.ist_index = 0
-#         self.second_index = 0
-        
-# p = Pieces()
-# print(p.ist_index)
 
-# Pieces = {
-#     "B_E": 
-# }
 
 def Indicies():
     print("\nIndicies for the board:\n")
@@ -40,78 +30,86 @@ def Indicies():
         ['70', '71', '72', '73', '74', '75', '76', '77']
     ]
     return indicies
+class Pieces:
+    def __init__(self, name: str, ist_index: int, second_index: int):
+        self.name = name
+        self.ist_index = ist_index
+        self.second_index = second_index
+    
+    def __str__(self) -> str:
+        self.name
 
-enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E", "B_S"]
 
+# e1 = Enimy_pieces("B_L_E", 0, 0)
+Black_piece_list = []
+Black_piece_list.append(Pieces("B_L_E", 0, 0))
+Black_piece_list.append(Pieces("B_L_H", 0, 1))
+Black_piece_list.append(Pieces("B_L_C", 0, 2))
+Black_piece_list.append(Pieces("B_Q", 0, 3))
+Black_piece_list.append(Pieces("B_K", 0, 4))
+Black_piece_list.append(Pieces("B_R_C", 0, 5))
+Black_piece_list.append(Pieces("B_R_H", 0, 6))
+Black_piece_list.append(Pieces("B_R_E", 0, 7))
+Black_piece_list.append(Pieces("B_S", 1, 0))
+
+for obj in Black_piece_list:
+    print(obj.name)
+    if obj.name == "B_L_E":
+        print(obj.ist_index, obj.second_index)
+
+print("\n")
+
+White_piece_list = []
+White_piece_list.append(Pieces("W_L_E", 7, 0))
+White_piece_list.append(Pieces("W_L_H", 7, 1))
+White_piece_list.append(Pieces("W_L_C", 7, 2))
+White_piece_list.append(Pieces("W_Q", 7, 3))
+White_piece_list.append(Pieces("W_K", 7, 4))
+White_piece_list.append(Pieces("W_R_C", 7, 5))
+White_piece_list.append(Pieces("W_R_H", 7, 6))
+White_piece_list.append(Pieces("W_R_E", 7, 7))
+White_piece_list.append(Pieces("W_S", 6, 0))
+
+for obj in White_piece_list:
+    print(obj.name)
+
+# print(e1.name)
+# print()
+# enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E"]
+list = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+for i in range(3):
+    for j in range(3):
+        # print(list[i][j
+        # while(j<1 and i<1):
+            # print(list[i][j])
+        print(list[i][j])
+        if i==1 and j==1:
+            break
+# print(list[0])
 # pieces = {
     # 'B_L_E': 
 # }
-def check_enemy_pieces(row, col):
-    for i in range(0, len(enemy_pieces)):
-        # print(enemy_pieces[i])
-        if enemy_pieces[i] == board[row][col]:
-            # print("4 true")
-            # print(enemy_pieces[i])
-            return enemy_pieces[i]
+def check_enemy_pieces():
+    for i in range(0, len(Black_piece_list)):
+        return Black_piece_list[i]
 
-def check_adjecent_piece(row, col):
-    for piece in board:
-        # print("col", col)
-        # while("W_K" != piece[row]):
-        if check_enemy_pieces(row, col) == piece[row+1]:
-            print("row ", str(row) + " " + str(col))
-            # print("adj", piece[row+1])
-            return piece[row+1]
-        # elif check_enemy_pieces(row, col) ==  piece[col+1]:
-        #     return piece[col+1]
+def check_adjecent_piece():
+    for adj_piece in board:
+        while("W_K" != adj_piece):
+            if check_enemy_pieces() == adj_piece:
+                return True
 
-def CheckMate():
-    # i=7
-    # j=4
-    for row in range(8):
-        # print(row)
-        for col in range(8):
-            # print("ele",board[row][col])
-            if check_enemy_pieces(row, col) == board[row][col]:
-                if "B_L_E" == board[row][col]:
-                    # print("treue")
-                    for i in range(8):
-                        for j in range(8):
-                            if i == j == 1:
-                                break
-                            elif i == 2 and j == 1:
-                                break
-                            elif i == 3 and j == 1:
-                                break
-                            elif i == 4 and j == 1:
-                                break
-                            elif i == 5 and j == 1:
-                                break
-                            elif i == 6 and j == 1:
-                                break
-                            elif i == 7 and j == 1:
-                            # while(i<1 and j<1):
-                                break
-                            # print(i,
-                            if check_adjecent_piece(i,j):
-                                print("true")
-                                # break
-                # print(piece)
-                # print("1 true at row "+ str(row) + " col " + str(col) + " piece " + board[row][col])
-                # print("at col " + str(col) + " piece " + check_enemy_pieces(row, col))
-                # piece = check_adjecent_piece(row, col)
-                # print(piece)
-                    
-                    # pass
-                    # print("true", check_adjecent_piece(row, col))
-                    # print("2 true")
-                    # pass
-            # break
-
-                    
-            # else:
-            #     print(check_enemy_pieces(row, col))
-            #     print("not enemy piece")
+# def CheckMate():
+#     i=7
+#     j=4
+#     for row in range(0,8):
+#         for col in range(0,8):
+#             if check_enemy_pieces() == board[row][col]:
+                # check_adjecent_piece() ==  
 
 def print_indicies():
     indicies = Indicies()
@@ -149,10 +147,9 @@ def input_indicies():
 
     # return index_1, index_2
 # while(True):
-
-print_indicies()
-CheckMate()
-# input_piece()
+# CheckMate()
+    # print_indicies()
+    # # input_piece()
     # input_indicies()
     # print_board()
 # board[int(input("enter the ist index of that chess piece   "))][int(input("enter the 2nd index of that chess piece "))] = "-"
