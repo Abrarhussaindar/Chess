@@ -76,7 +76,8 @@ White_piece_list.append(Pieces("W_S", 6, 0))
 
 # print(e1.name)
 # print()
-enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E"]
+black_enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E"]
+white_enemy_pieces = ["W_L_E", "W_L_H", "W_L_C", "W_Q", "W_K", "W_R_C", "W_R_H", "W_R_E"]
 
 # def adj_piece_king(piece, r,i):
 #     for c in range(0,8):
@@ -87,14 +88,35 @@ enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_
 def check_adj_enemy_pieces(ene):
     # print("in caep: ", ene)
     # print(len(enemy_pieces))
-    for i in range(0, len(enemy_pieces)):
+    for i in range(0, len(black_enemy_pieces)):
         
-        if enemy_pieces[i] == ene:
-            print("for ene",enemy_pieces[i])
-            print("true")
+        if black_enemy_pieces[i] == ene:
+            # print("for ene",enemy_pieces[i])
+            # print("true")
             return True
         #     # pass
+def check_adj_same_pieces(row, col):
+    r = row
+    c = col
 
+    if c>=4:
+        for c in range(c, 8):
+            for i in range(0,len(white_enemy_pieces)):
+                if board[r][c] == white_enemy_pieces[i]:
+                    print("piece at ", board[r][c], "white_piece ", white_enemy_pieces[i])
+                    return True
+
+    elif c<4:
+        while(c>0):
+            for i in range(0,len(white_enemy_pieces)):
+                if board[r][c] == white_enemy_pieces[i]:
+                    print("piece at ", board[r][c], "white_piece ", white_enemy_pieces[i])
+                    return True
+            c=-1
+    # for i in range(0, len(white_enemy_pieces)):
+    #     if white_enemy_pieces[i] == ene:
+    #         return True
+        # print
 # def check_adjecent_piece(piece):
 #     count = 0
 #     for adj_piece in board:
@@ -226,7 +248,7 @@ def input_indicies():
         if board[index_from_1][index_from_2] == "W_K":
             king_row = index_to_1
             king_col = index_to_2
-    print("row:", king_row, "col", king_col)
+    # print("row:", king_row, "col", king_col)
 
     if(index_to_2 < 3 or index_to_2 > 4):
         board[index_from_1][index_from_2] = ' - '
@@ -235,358 +257,685 @@ def input_indicies():
     CheckMate(king_row, king_col)
 
     # return index_1, index_2
+
+def traveling_right(row, col):
+    for c in range(col+1,8):
+        # print("col",c)
+        ene = board[row][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+def traveling_right_upper_diagonal(row, col):
+    r = row
+    c = col
+    # while(r>=0):
+    # for r in range(row-1,row-row):
+    # for c in range(col+1,8):
+    while(r>=0 and c<8):
+        # print("piece in rud ", board[r][c], " r=",r, " c=",c)
+
+        ene = board[r][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                print("true its here")
+                print("checkmate")
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                print("checkmate")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+        r= r-1
+        c=c+1
+
+def traveling_right_lower_diagonal(row, col):
+    r = row
+    c = col
+    # print("r",r  ,"c",c)
+    while(r<8 and c<8):
+        # print("piece in lrd", board[r][c], " r=",r, " c=",c)
+
+        ene = board[r][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                print("true its here")
+                print("checkmate")
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                                # print("true its here")
+                print("checkmate")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)     
+
+        r= r+1
+        c=c+1
+
+def traveling_left(row, col):
+    c = col
+    # print("c", c)
+    # print("row",row)
+
+    # traveling to left
+    while (c>=0):
+        # print("col", c)
+        ene = board[row][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+        c = c-1
+
+def traveling_left_upper_diagonal(row, col):
+    r = row
+    c = col
+    # print("r",r  ,"c",c)
+    while(r>=0 and c>=0):
+        # print("piece in urd", board[r][c], " r=",r, " c=",c)
+
+        ene = board[r][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                print("true its here")
+                print("checkmate")
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                                # print("true its here")
+                print("checkmate")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+        r= r-1
+        c=c-1
+
+def traveling_left_lower_diagonal(row, col):
+    r = row
+    c = col
+    # print("r",r  ,"c",c)
+    while(r<8 and c>=0):
+        # print("piece in lld", board[r][c], " r=",r, " c=",c)
+
+        ene = board[r][c]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                print("true its here")
+                print("checkmate")
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                                # print("true its here")
+                print("checkmate")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+            
+
+        r= r+1
+        c=c-1
+
+def traveling_upwards(row, col):
+    r = row
+    while (r>=0):
+        # print("row", r)
+        ene = board[r][col]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+        r = r-1
+
+def traveling_downwards(row, col):
+    for r in range(row+1, 8):
+        # print("row in downwards",r)
+        ene = board[r][col]
+        # print(ene)
+        if check_adj_enemy_pieces(ene):
+            print(" enemy found true")
+            if ene == "B_L_E":
+                print("true its here")
+                print("checkmate")
+                B_L_E_fun(row,col)
+            if ene == "B_L_H":
+                B_L_H_fun(row, col)
+            if ene == "B_L_C":
+                B_L_C_fun(row, col)
+            if ene == "B_Q":
+                print("true its here")
+                print("checkmate")
+                B_Q_fun(row, col)
+            if ene == "B_K":
+                B_K_fun(row, col)
+            if ene == "B_R_C":
+                print("true its here")
+                # B_R_C_fun(row, col)
+                pass
+            if ene == "B_R_H":
+                # B_R_H_fun(row, col)
+                print("true its here")
+            if ene == "B_R_E":
+                print("true its here")
+                print("checkmate")
+                B_R_E_fun(row, col)
+
+
 def CheckMate(row, col):
     # row = 7
     # col = 4
-    print("in check mate row", row, "col", col)
+    # print("in check mate row", row, "col", col)
     if board[row][col] == "W_K":
         print("true")
 
+        
         # traveling to right
-        for c in range(col+1,8):
-            print("col",c)
-            ene = board[row][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
-        print("col: ",col)
-        print("row: ",row)
-        print("-------")
-        c = col
-        print("c", c)
-        print("row",row)
+        if check_adj_same_pieces(row, col+1):
+            # print("true")
+            pass
+            # print("piece", board[row][col+1])
+        else:
+            traveling_right(row, col)
+        # for c in range(col+1,8):
+        #     # print("col",c)
+        #     ene = board[row][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
+
+        # print("col: ",col)
+        # print("row: ",row)
+        # print("-------")
+        # c = col
+        # print("c", c)
+        # print("row",row)
 
         # traveling to left
-        while (c>=0):
-            print("col", c)
-            ene = board[row][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
-            c = c-1
+        if check_adj_same_pieces(row, col-1):
+            # print("true")
+            pass
+            # print("piece", board[row][col+1])
+        else:
+            traveling_left(row, col)
+        # while (c>=0):
+        #     # print("col", c)
+        #     ene = board[row][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
+
+        #     c = c-1
 
         # traveling upwards 
-        print("row for up", row)
-        r = row
-        while (r>=0):
-            print("row", r)
-            ene = board[r][col]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
-            r = r-1
+        traveling_upwards(row, col)
+        # print("row for up", row)
+        # r = row
+        # while (r>=0):
+        #     # print("row", r)
+        #     ene = board[r][col]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
+        #     r = r-1
         
         # traveling downwards
-        for r in range(row+1, 8):
-            print("row in downwards",r)
-            ene = board[r][col]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
+        traveling_downwards(row, col)
+        # for r in range(row+1, 8):
+        #     # print("row in downwards",r)
+        #     ene = board[r][col]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
+
 
         # traveling right upper diagonal
+        traveling_right_upper_diagonal(row, col)
+        # r = row
+        # c = col
+        # # while(r>=0):
+        # # for r in range(row-1,row-row):
+        # # for c in range(col+1,8):
+        # while(r>=0 and c<8):
+        #     # print("piece in rud ", board[r][c], " r=",r, " c=",c)
 
-        r = row
-        c = col
-        # while(r>=0):
-        # for r in range(row-1,row-row):
-        # for c in range(col+1,8):
-        while(r>=0 and c<8):
-            print("piece in rud ", board[r][c], " r=",r, " c=",c)
+        #     ene = board[r][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #             print("checkmate")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
 
-            ene = board[r][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                    print("checkmate")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
                 
 
-            r= r-1
-            c=c+1
+        #     r= r-1
+        #     c=c+1
         
         # traveling lower left diagonal
-        r = row
-        c = col
-        print("r",r  ,"c",c)
-        while(r<8 and c>=0):
-            print("piece in lld", board[r][c], " r=",r, " c=",c)
+        traveling_left_lower_diagonal(row, col)
+        # r = row
+        # c = col
+        # # print("r",r  ,"c",c)
+        # while(r<8 and c>=0):
+        #     # print("piece in lld", board[r][c], " r=",r, " c=",c)
 
-            ene = board[r][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                                    # print("true its here")
-                    print("checkmate")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
+        #     ene = board[r][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #                             # print("true its here")
+        #             print("checkmate")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
+
                 
 
-            r= r+1
-            c=c-1
+        #     r= r+1
+        #     c=c-1
 
-        # traveling lower right diagonal 
-        r = row
-        c = col
-        print("r",r  ,"c",c)
-        while(r<8 and c<8):
-            print("piece in lrd", board[r][c], " r=",r, " c=",c)
+        # traveling lower right diagonal
+        traveling_right_lower_diagonal(row, col)
+        # r = row
+        # c = col
+        # # print("r",r  ,"c",c)
+        # while(r<8 and c<8):
+        #     # print("piece in lrd", board[r][c], " r=",r, " c=",c)
 
-            ene = board[r][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                                    # print("true its here")
-                    print("checkmate")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
-                
+        #     ene = board[r][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #                             # print("true its here")
+        #             print("checkmate")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)     
 
-            r= r+1
-            c=c+1
+        #     r= r+1
+        #     c=c+1
 
-        # traveling uper left diagonal 
-        r = row
-        c = col
-        print("r",r  ,"c",c)
-        while(r>=0 and c>=0):
-            print("piece in urd", board[r][c], " r=",r, " c=",c)
+        # traveling uper left diagonal
+        traveling_left_upper_diagonal(row, col)
+        # r = row
+        # c = col
+        # # print("r",r  ,"c",c)
+        # while(r>=0 and c>=0):
+        #     # print("piece in urd", board[r][c], " r=",r, " c=",c)
 
-            ene = board[r][c]
-            print(ene)
-            if check_adj_enemy_pieces(ene):
-                print(" enemy found true")
-                if ene == "B_L_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_E_fun(row,col)
-                if ene == "B_L_H":
-                    B_L_H_fun(row, col)
-                if ene == "B_L_C":
-                    print("true its here")
-                    print("checkmate")
-                    B_L_C_fun(row, col)
-                if ene == "B_Q":
-                    print("true its here")
-                    print("checkmate")
-                    B_Q_fun(row, col)
-                if ene == "B_K":
-                    B_K_fun(row, col)
-                if ene == "B_R_C":
-                    print("true its here")
-                                    # print("true its here")
-                    print("checkmate")
-                    # B_R_C_fun(row, col)
-                    pass
-                if ene == "B_R_H":
-                    # B_R_H_fun(row, col)
-                    print("true its here")
-                if ene == "B_R_E":
-                    print("true its here")
-                    print("checkmate")
-                    B_R_E_fun(row, col)
-            else:
-                print("nope")
-                
+        #     ene = board[r][c]
+        #     # print(ene)
+        #     if check_adj_enemy_pieces(ene):
+        #         print(" enemy found true")
+        #         if ene == "B_L_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_E_fun(row,col)
+        #         if ene == "B_L_H":
+        #             B_L_H_fun(row, col)
+        #         if ene == "B_L_C":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_L_C_fun(row, col)
+        #         if ene == "B_Q":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_Q_fun(row, col)
+        #         if ene == "B_K":
+        #             B_K_fun(row, col)
+        #         if ene == "B_R_C":
+        #             print("true its here")
+        #                             # print("true its here")
+        #             print("checkmate")
+        #             # B_R_C_fun(row, col)
+        #             pass
+        #         if ene == "B_R_H":
+        #             # B_R_H_fun(row, col)
+        #             print("true its here")
+        #         if ene == "B_R_E":
+        #             print("true its here")
+        #             print("checkmate")
+        #             B_R_E_fun(row, col)
 
-            r= r-1
-            c=c-1
+        #     r= r-1
+        #     c=c-1 
 
 
     else:
-        print("in black")
+        # print("in black")
         ene = board[row][col]
-        print(ene)
+        # print(ene)
         if check_adj_enemy_pieces(ene):
             print("true ene: ",ene)
         # print("nope")
