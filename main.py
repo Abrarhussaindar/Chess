@@ -73,8 +73,8 @@ White_piece_list.append(Pieces("W_S", 6, 0))
 
 # print(e1.name)
 # print()
-black_enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E"]
-white_enemy_pieces = ["W_L_E", "W_L_H", "W_L_C", "W_Q", "W_K", "W_R_C", "W_R_H", "W_R_E"]
+black_enemy_pieces = ["B_L_E", "B_L_H", "B_L_C", "B_Q", "B_K", "B_R_C", "B_R_H", "B_R_E", "B_S"]
+white_enemy_pieces = ["W_L_E", "W_L_H", "W_L_C", "W_Q", "W_K", "W_R_C", "W_R_H", "W_R_E", "W_S"]
 
 # def adj_piece_king(piece, r,i):
 #     for c in range(0,8):
@@ -92,13 +92,17 @@ def check_adj_enemy_pieces(ene):
             # print("true")
             return True
         #     # pass
-def check_adj_same_pieces(ene):
-
+def check_adj_same_pieces(ene, which_fun):
+    print("in ", which_fun, "if fun", ene)
     for i in range(0, len(white_enemy_pieces)):
-        if white_enemy_pieces[i] == ene:
-            # print("for ene",enemy_pieces[i])
-            # print("true")
+        print("in", which_fun, "for fun", ene)
+        if ene == white_enemy_pieces[i]:
+            print("in ", which_fun, " for i =", i, " if fun", ene)
+            print("for ene",white_enemy_pieces[i])
+            print("true")
             return True
+        # else:
+        #     return False
     # r = 7
     # c = 4
 
@@ -283,14 +287,18 @@ def input_indicies():
     # return index_1, index_2
 
 def traveling_right(row, col):
+    str = "right"
     for c in range(col+1,8):
         # print("col",c)
+        
         ene = board[row][c]
-        # print(ene)
-        if check_adj_same_pieces(ene):
-            pass
+        print("in right", ene)
+        if check_adj_same_pieces(ene, str):
+            print("in right if", ene)
+            print("its present their at adj positons in right fun")
+            break
         elif check_adj_enemy_pieces(ene):
-            print(" enemy found true")
+            print(" enemy found true its present their at adj positons")
             if ene == "B_L_E":
                 print("true its here")
                 print("checkmate")
@@ -323,12 +331,15 @@ def traveling_right_upper_diagonal(row, col):
     # while(r>=0):
     # for r in range(row-1,row-row):
     # for c in range(col+1,8):
-    while(r>=0 and c<8):
+    while(r>=0 or c<=7):
         # print("piece in rud ", board[r][c], " r=",r, " c=",c)
 
-        ene = board[r][c]
-        if check_adj_same_pieces(ene):
-            pass
+        ene = board[r-1][c+1]
+        str = "rud"
+        print("ene ",ene, "at r=", r-1, " and c=", c+1)
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in rud")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -371,8 +382,10 @@ def traveling_right_lower_diagonal(row, col):
         # print("piece in lrd", board[r][c], " r=",r, " c=",c)
 
         ene = board[r][c]
-        if check_adj_same_pieces(ene):
-            pass
+        str = "rld"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in rld")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -410,15 +423,17 @@ def traveling_right_lower_diagonal(row, col):
 
 def traveling_left(row, col):
     c = col
-    # print("c", c)
-    # print("row",row)
+    print("c in left", c)
+    print("row in left",row)
 
     # traveling to left
     while (c>=0):
         # print("col", c)
-        ene = board[row][c]
-        if check_adj_same_pieces(ene):
-            pass
+        ene = board[row][c-1]
+        str = "left"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in left")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -457,8 +472,10 @@ def traveling_left_upper_diagonal(row, col):
         # print("piece in urd", board[r][c], " r=",r, " c=",c)
 
         ene = board[r][c]
-        if check_adj_same_pieces(ene):
-            pass
+        str = "lud"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons lud")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -502,8 +519,10 @@ def traveling_left_lower_diagonal(row, col):
         # print("piece in lld", board[r][c], " r=",r, " c=",c)
 
         ene = board[r][c]
-        if check_adj_same_pieces(ene):
-            pass
+        str = "lld"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in lld")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -545,9 +564,11 @@ def traveling_upwards(row, col):
     r = row
     while (r>=0):
         # print("row", r)
-        ene = board[r][col]
-        if check_adj_same_pieces(ene):
-            pass
+        ene = board[r-1][col]
+        str = "up"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in up")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -581,8 +602,10 @@ def traveling_downwards(row, col):
     for r in range(row+1, 8):
         # print("row in downwards",r)
         ene = board[r][col]
-        if check_adj_same_pieces(ene):
-            pass
+        str = "down"
+        if check_adj_same_pieces(ene, str):
+            print("its present their at adj positons in down")
+            break
         elif check_adj_enemy_pieces(ene):
             print(" enemy found true")
             if ene == "B_L_E":
@@ -617,7 +640,7 @@ def CheckMate(row, col):
     # col = 4
     # print("in check mate row", row, "col", col)
     if board[row][col] == "W_K":
-        print("true")
+        # print("true")
 
         
         # traveling to right
