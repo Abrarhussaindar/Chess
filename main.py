@@ -8,6 +8,7 @@ board = [
     [' W_S ', ' W_S ', ' W_S ', 'W_S', 'W_S', ' W_S ', ' W_S ', ' W_S '],
     ['W_L_E', 'W_L_H', 'W_L_C', 'W_Q', 'W_K', 'W_R_C', 'W_R_H', 'W_R_E']
 ]
+
 def print_board():
     print("\nChess Board:\n")
     for row in board:
